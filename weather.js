@@ -20,17 +20,18 @@ window.addEventListener('load', ()=>{
             .then(data=>{
                 const {temperature, summary, icon} = data.currently;
                 temperatureDescription.textContent = summary;
-                temperatureDegree.textContent =  temperature;
+                temperatureDegree.textContent =  Math.floor((temperature-32)*(5/9));
                 locationTimezone.textContent = data.timezone;
                 // set icon
-                setIcons(icon, document.querySelector('.icon'));
+                setIcons(icon, document.querySelector('.sky-icon'));
             });
         });
     }
 
     function setIcons(icon, iconID){
         const skycons = new Skycons({color:"white"});
-        const currentIcon = icon.replace(/-/g," ").toUpperCase();
+        const currentIcon = icon.replace(/-/g,"_").toUpperCase();
+        console.log(currentIcon);
         skycons.play();
         return skycons.set(iconID, Skycons[currentIcon]);
     }
